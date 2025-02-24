@@ -12,6 +12,7 @@ import AllProduct from "./pages/allProduct/AllProduct";
 import Signup from "./pages/registration/signup";
 import Login from "./pages/registration/Login";
 import UserDashboard from "./pages/user/UserDashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user-dashboard" element={<UserDashboard />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Routes>
       </Router>
     </div>

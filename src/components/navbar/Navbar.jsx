@@ -22,8 +22,9 @@ function Navbar() {
             <Link to={'/user-dashboard'}>Kamal</Link>
         </li>
         {/* Admin */}
-        {/* <li>
-        </li> */}
+        <li>
+          <Link to={'/admin-dashboard'}>Admin</Link> {/* Admin Dashboard */}
+        </li>
         {/* logout */}
         {/* <li>
         </li> */}
