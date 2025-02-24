@@ -11,6 +11,7 @@ import CartPage from "./pages/cart/CartPage";
 import AllProduct from "./pages/allProduct/AllProduct";
 import Signup from "./pages/registration/signup";
 import Login from "./pages/registration/Login";
+import UserDashboard from "./pages/user/UserDashboard";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/todolosproductos" element={<AllProduct />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
         </Routes>
       </Router>
     </div>
