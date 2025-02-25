@@ -13,6 +13,8 @@ import Signup from "./pages/registration/signup";
 import Login from "./pages/registration/Login";
 import UserDashboard from "./pages/user/UserDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AddProductPage from "./pages/admin/AddProductPage";
+import UpdateProductPage from "./pages/admin/UpdateProductPage";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/user-dashboard" element={<UserDashboard />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/agregarproducto" element={<AddProductPage />} />
+          <Route path="/actualizarproducto" element={<UpdateProductPage />} />
         </Routes>
       </Router>
     </div>
