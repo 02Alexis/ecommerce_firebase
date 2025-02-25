@@ -4,13 +4,15 @@ import OrderDetail from "../../components/admin/OrderDetail";
 import UserDetail from "../../components/admin/UserDetail";
 
 const AdminDashboard = () => {
+  const user = JSON.parse(localStorage.getItem("users"));
+
   return (
     <div>
       {/* Top */}
       <div className="top mb-5 px-5 mt-5">
         <div className=" bg-green-50 py-5 border border-green-100 rounded-lg">
           <h1 className=" text-center text-2xl font-bold text-green-500">
-            Admin Dashboard
+            Tablero de administración
           </h1>
         </div>
       </div>
@@ -30,10 +32,20 @@ const AdminDashboard = () => {
             {/* text  */}
             <div className="">
               <h1 className=" text-center text-lg text-green-500">
-                <span className=" font-bold">Name :</span> Kamal Nayan Upadhyay
+                <span className=" font-bold">Nombre :</span> {user?.name}
               </h1>
               <h1 className=" text-center text-lg text-green-500">
-                <span className=" font-bold">Email :</span> test@gmail.com
+                <span className=" font-bold">Email :</span> {user?.email}
+              </h1>
+              {/* Date  */}
+              <h1 className=" text-center text-lg text-green-500">
+                <span className=" font-bold">Fecha : </span>
+                {user?.date}
+              </h1>
+              {/* Role  */}
+              <h1 className=" text-center text-lg text-green-500">
+                <span className=" font-bold">Rol : </span>
+                {user?.role}
               </h1>
             </div>
           </div>
@@ -71,7 +83,7 @@ const AdminDashboard = () => {
                   <h2 className="title-font font-medium text-3xl text-green-400 fonts1">
                     10
                   </h2>
-                  <p className=" text-green-500  font-bold">Total Products</p>
+                  <p className=" text-green-500  font-bold">Total Productos</p>
                 </div>
               </Tab>
 
@@ -137,13 +149,13 @@ const AdminDashboard = () => {
             </TabList>
 
             <TabPanel>
-                <ProductDetail />
+              <ProductDetail />
             </TabPanel>
             <TabPanel>
-                <OrderDetail />
+              <OrderDetail />
             </TabPanel>
             <TabPanel>
-                <UserDetail />
+              <UserDetail />
             </TabPanel>
           </Tabs>
         </div>
