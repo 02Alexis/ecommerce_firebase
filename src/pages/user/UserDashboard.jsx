@@ -15,6 +15,9 @@ const products = [
 ];
 
 const UserDashboard = () => {
+  // user
+  const user = JSON.parse(localStorage.getItem("users"));
+
   return (
     <Layout>
       <div className=" container mx-auto px-4 py-5 lg:py-8">
@@ -32,10 +35,20 @@ const UserDashboard = () => {
             {/* text  */}
             <div className="">
               <h1 className=" text-center text-lg">
-                <span className=" font-bold">Name :</span> Kamal Nayan Upadhyay
+                <span className=" font-bold">Nombre :</span> {user?.name}
               </h1>
               <h1 className=" text-center text-lg">
-                <span className=" font-bold">Email :</span> test@gmail.com
+                <span className=" font-bold">Email :</span> {user?.email}
+              </h1>
+              {/* Date  */}
+              <h1 className=" text-center text-lg">
+                <span className=" font-bold">Fecha : </span>
+                {user?.date}
+              </h1>
+              {/* Role  */}
+              <h1 className=" text-center text-lg">
+                <span className=" font-bold">Rol : </span>
+                {user?.role}
               </h1>
             </div>
           </div>
@@ -46,7 +59,9 @@ const UserDashboard = () => {
           {/* main 1 */}
           <div className="mx-auto my-4 max-w-6xl px-2 md:my-6 md:px-0">
             {/* text  */}
-            <h2 className=" text-2xl lg:text-3xl font-bold">Detalles del pedido</h2>
+            <h2 className=" text-2xl lg:text-3xl font-bold">
+              Detalles del pedido
+            </h2>
 
             {/* main 2 */}
             <div className="mt-5 flex flex-col overflow-hidden rounded-xl border border-green-100 md:flex-row">
