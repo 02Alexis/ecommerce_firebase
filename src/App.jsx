@@ -1,8 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NoPage from "./pages/noPage/NoPage";
 import HomePage from "./pages/home/HomePage";
 import ProductInfo from "./pages/productInfo/ProductInfo";
@@ -17,6 +13,8 @@ import AddProductPage from "./pages/admin/AddProductPage";
 import UpdateProductPage from "./pages/admin/UpdateProductPage";
 import MyState from "./context/myState";
 import { Toaster } from "react-hot-toast";
+import { ProtectedRouteForUser } from "./ProtectedRoute/ProtectedRouteForUser";
+import { ProtectedRouteForAdmin } from "./ProtectedRoute/ProtectedRouteForAdmin";
 
 function App() {
   return (
@@ -28,18 +26,46 @@ function App() {
           <Route path="/*" element={<NoPage />} />
           <Route path="/infoproducto" element={<ProductInfo />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/todolosproductos" element={<AllProduct />} />
+          <Route path="/allproduct" element={<AllProduct />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/user-dashboard" element={<UserDashboard />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/agregarproducto" element={<AddProductPage />} />
-          <Route path="/actualizarproducto" element={<UpdateProductPage />} />
+          <Route
+            path="/user-dashboard"
+            element={
+              <ProtectedRouteForUser>
+                <UserDashboard />
+              </ProtectedRouteForUser>
+            }
+          />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <ProtectedRouteForAdmin>
+                <AdminDashboard />
+              </ProtectedRouteForAdmin>
+            }
+          />
+          <Route
+            path="/agregarproducto"
+            element={
+              <ProtectedRouteForAdmin>
+                <AddProductPage />
+              </ProtectedRouteForAdmin>
+            }
+          />
+          <Route
+            path="/actualizarproducto"
+            element={
+              <ProtectedRouteForAdmin>
+                <UpdateProductPage />
+              </ProtectedRouteForAdmin>
+            }
+          />
         </Routes>
-          <Toaster />
+        <Toaster />
       </Router>
     </MyState>
-  )
+  );
 }
 
-export default App
+export default App;
