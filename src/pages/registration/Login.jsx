@@ -1,8 +1,80 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import myContext from "../../context/myContext";
+import toast from "react-hot-toast";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, fireDB } from "../../firebase/FirebaseConfig";
+import Loader from "../../components/loader/Loader";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 const Login = () => {
+  const context = useContext(myContext);
+  const { loading, setLoading } = context;
+
+  // navigate
+  const navigate = useNavigate();
+
+  // User Signup State
+  const [userLogin, setUserLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  /**========================================================================
+   *                          User Login Function
+   *========================================================================**/
+
+  const userLoginFunction = async () => {
+    // validation
+    if (userLogin.email === "" || userLogin.password === "") {
+      toast.error("Se requieren todos los campos");
+    }
+
+    setLoading(true);
+    try {
+      const users = await signInWithEmailAndPassword(
+        auth,
+        userLogin.email,
+        userLogin.password
+      );
+      // console.log(users.user)
+
+      try {
+        const q = query(
+          collection(fireDB, "user"),
+          where("uid", "==", users?.user?.uid)
+        );
+        const data = onSnapshot(q, (QuerySnapshot) => {
+          let user;
+          QuerySnapshot.forEach((doc) => (user = doc.data()));
+          localStorage.setItem("users", JSON.stringify(user));
+          setUserLogin({
+            email: "",
+            password: "",
+          });
+          toast.success("Inicio de sesión con éxito");
+          setLoading(false);
+          if (user.role === "user") {
+            navigate("/user-dashboard");
+          } else {
+            navigate("/admin-dashboard");
+          }
+        });
+        return () => data;
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("Error de inicio de sesion");
+    }
+  };
+
   return (
     <div className="flex justify-center items-center h-screen">
+      {loading && <Loader />}
       {/* Login Form  */}
       <div className="login_Form bg-green-50 px-1 lg:px-8 py-6 border border-green-100 rounded-xl shadow-md">
         {/* Top Heading  */}
@@ -16,7 +88,14 @@ const Login = () => {
         <div className="mb-3">
           <input
             type="email"
-            placeholder="Email Address"
+            placeholder="Dirección de correo electrónico"
+            value={userLogin.email}
+            onChange={(e) => {
+              setUserLogin({
+                ...userLogin,
+                email: e.target.value,
+              });
+            }}
             className="bg-green-50 border border-green-200 px-2 py-2 w-96 rounded-md outline-none placeholder-green-200"
           />
         </div>
@@ -25,7 +104,14 @@ const Login = () => {
         <div className="mb-5">
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Contraseña"
+            value={userLogin.password}
+            onChange={(e) => {
+              setUserLogin({
+                ...userLogin,
+                password: e.target.value,
+              });
+            }}
             className="bg-green-50 border border-green-200 px-2 py-2 w-96 rounded-md outline-none placeholder-green-200"
           />
         </div>
@@ -34,6 +120,7 @@ const Login = () => {
         <div className="mb-5">
           <button
             type="button"
+            onClick={userLoginFunction}
             className="bg-green-500 hover:bg-green-600 w-full text-white text-center py-2 font-bold rounded-md "
           >
             Login
