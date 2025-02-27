@@ -37,7 +37,8 @@ function MyState({ children }) {
       value={{
         loading,
         setLoading,
-        getAllProduct
+        getAllProduct,
+        getAllProductFunction
       }}
     >
       {children}
