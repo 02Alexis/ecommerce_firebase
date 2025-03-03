@@ -6,8 +6,12 @@ import {
   incrementQuantity,
 } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { fireDB } from "../../firebase/FirebaseConfig";
+import BuyNowModal from "../../components/buyNowModal/BuyNowModal";
+import { Navigate } from "react-router-dom";
 
 const CartPage = () => {
   const cartItems = useSelector((state) => state.cart);
@@ -39,6 +43,63 @@ const CartPage = () => {
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  // user
+  const user = JSON.parse(localStorage.getItem("users"));
+
+  // Buy Now Function
+  const [addressInfo, setAddressInfo] = useState({
+    name: "",
+    address: "",
+    pincode: "",
+    mobileNumber: "",
+    time: Timestamp.now(),
+    date: new Date().toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }),
+  });
+
+  const buyNowFunction = () => {
+    // validation
+    if (
+      addressInfo.name === "" ||
+      addressInfo.address === "" ||
+      addressInfo.pincode === "" ||
+      addressInfo.mobileNumber === ""
+    ) {
+      return toast.error("Se requieren todos los campos.");
+    }
+
+    // Order Info
+    const orderInfo = {
+      cartItems,
+      addressInfo,
+      email: user.email,
+      userid: user.uid,
+      status: "confirmed",
+      time: Timestamp.now(),
+      date: new Date().toLocaleString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      }),
+    };
+    try {
+      const orderRef = collection(fireDB, "order");
+      addDoc(orderRef, orderInfo);
+      setAddressInfo({
+        name: "",
+        address: "",
+        pincode: "",
+        mobileNumber: "",
+      });
+      toast.success("Pedido realizado exitoso");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Layout>
@@ -132,7 +193,7 @@ const CartPage = () => {
                               >
                                 <Trash size={12} className="text-red-500" />
                                 <span className="text-xs font-medium text-red-500">
-                                  Remove
+                                  Eliminar
                                 </span>
                               </button>
                             </div>
@@ -167,14 +228,6 @@ const CartPage = () => {
                       $ {cartTotal}
                     </dd>
                   </div>
-                  {/* <div className="flex items-center justify-between pt-4">
-                    <dt className="flex items-center text-sm text-gray-800">
-                      <span>Discount</span>
-                    </dt>
-                    <dd className="text-sm font-medium text-green-700">
-                      - $ 3,431
-                    </dd>
-                  </div> */}
                   <div className="flex items-center justify-between py-4">
                     <dt className="flex text-sm text-gray-800">
                       <span>Cargos de entrega</span>
@@ -194,9 +247,15 @@ const CartPage = () => {
                 </dl>
                 <div className="px-2 pb-4 font-medium text-green-700">
                   <div className="flex gap-4 mb-6">
-                    <button className="w-full px-4 py-3 text-center text-gray-100 bg-green-600 border border-transparent dark:border-gray-700 hover:border-green-500 hover:text-green-700 hover:bg-pink-100 rounded-xl">
-                      Comprar ahora
-                    </button>
+                    {user ? (
+                      <BuyNowModal
+                        addressInfo={addressInfo}
+                        setAddressInfo={setAddressInfo}
+                        buyNowFunction={buyNowFunction}
+                      />
+                    ) : (
+                      <Navigate to={"/login"} />
+                    )}
                   </div>
                 </div>
               </div>
