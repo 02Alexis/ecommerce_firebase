@@ -1,14 +1,35 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router";
 import myContext from "../../context/myContext";
-import Loader from "../loader/Loader";
-
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 
 function HomePageProductCard() {
   const navigate = useNavigate();
 
   const context = useContext(myContext);
-  const {loading, getAllProduct} = context;
+  const { getAllProduct } = context;
+
+  const cartItems = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  const addCart = (item) => {
+    // console.log(item)
+    dispatch(addToCart(item));
+    toast.success("Añadido a la cesta");
+  };
+
+  const deleteCart = (item) => {
+    dispatch(deleteFromCart(item));
+    toast.success("Eliminado de la cesta");
+  };
+
+  // console.log(cartItems)
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   return (
     <div className="mt-10">
@@ -21,18 +42,14 @@ function HomePageProductCard() {
       {/* main  */}
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-5 mx-auto">
-          <div className="flex justify-center">
-            {loading && <Loader />}
-          </div>
-          
           <div className="flex flex-wrap -m-4">
-            {getAllProduct.slice(0,8).map((item, index) => {
+            {getAllProduct.slice(0, 8).map((item, index) => {
               const { id, productImageUrl, title, price } = item;
               return (
                 <div key={index} className="p-4 w-full md:w-1/4">
                   <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
                     <img
-                      onClick={()=> navigate(`/infoproducto/${id}`)}
+                      onClick={() => navigate(`/infoproducto/${id}`)}
                       className="lg:h-80  h-96 w-full"
                       src={productImageUrl}
                       alt="img"
@@ -48,8 +65,22 @@ function HomePageProductCard() {
                       <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
                         ${price}
                       </h1>
-                      <div className="flex justify-center ">
-                        <button className=" bg-green-500 hover:bg-green-600 w-full text-white py-[4px] rounded-lg font-bold"></button>
+                      <div className="flex justify-center">
+                        {cartItems.some((p) => p.id === item.id) ? (
+                          <button
+                            onClick={() => deleteCart(item)}
+                            className=" bg-red-700 hover:bg-green-600 w-full text-white py-[4px] rounded-lg font-bold"
+                          >
+                            Eliminar de la cesta
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => addCart(item)}
+                            className=" bg-green-500 hover:bg-green-600 w-full text-white py-[4px] rounded-lg font-bold"
+                          >
+                            Agregar a la cesta
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
