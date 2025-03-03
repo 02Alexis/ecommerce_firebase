@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 const category = [
   {
     image: "https://cdn-icons-png.flaticon.com/256/4359/4359963.png",
@@ -34,6 +36,8 @@ const category = [
 ];
 
 function Category() {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className="flex flex-col mt-5">
@@ -46,7 +50,9 @@ function Category() {
               return (
                 <div key={index} className="px-3 lg:px-10">
                   {/* Image  */}
-                  <div className=" w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full  bg-green-500 transition-all hover:bg-green-400 cursor-pointer mb-1 ">
+                  <div
+                     onClick={() => navigate(`/categoria/${item.name}`)}
+                     className=" w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full  bg-green-500 transition-all hover:bg-green-400 cursor-pointer mb-1 ">
                     <div className="flex justify-center mb-12">
                       {/* Image tag  */}
                       <img src={item.image} alt="img" />
