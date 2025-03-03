@@ -5,6 +5,9 @@ import { useParams } from "react-router";
 import { fireDB } from "../../firebase/FirebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import Loader from "../../components/loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, deleteFromCart } from "../../redux/cartSlice";
+import toast from "react-hot-toast";
 
 const ProductInfo = () => {
   const context = useContext(myContext);
@@ -19,13 +22,33 @@ const ProductInfo = () => {
     setLoading(true);
     try {
       const productTemp = await getDoc(doc(fireDB, "products", id));
-      setProduct(productTemp.data());
+      setProduct({ ...productTemp.data(), id: productTemp.id });
       setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
     }
   };
+
+  const cartItems = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  const addCart = (item) => {
+    // console.log(item)
+    dispatch(addToCart(item));
+    toast.success("Agregado al carrito");
+  };
+
+  const deleteCart = (item) => {
+    dispatch(deleteFromCart(item));
+    toast.success("Eliminado del carrito");
+  };
+
+  // console.log(cartItems)
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   useEffect(() => {
     getProductData();
@@ -129,16 +152,26 @@ const ProductInfo = () => {
                       <h2 className="mb-2 text-lg font-bold text-gray-700 dark:text-gray-400">
                         Descrición:
                       </h2>
-                      <p>
-                        {product?.description}
-                      </p>
+                      <p>{product?.description}</p>
                     </div>
 
                     <div className="mb-6 " />
                     <div className="flex flex-wrap items-center mb-6">
-                      <button className="w-full px-4 py-3 text-center text-green-600 bg-green-100 border border-green-600  hover:bg-green-600 hover:text-gray-100 rounded-xl">
-                        Añadir a la cesta
-                      </button>
+                      {cartItems.some((p) => p.id === product.id) ? (
+                        <button
+                          onClick={() => deleteCart(product)}
+                          className="w-full px-4 py-3 text-center text-white bg-red-500 border border--600  hover:bg-red-600 hover:text-gray-100  rounded-xl"
+                        >
+                          Eliminar de la cesta
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => addCart(product)}
+                          className="w-full px-4 py-3 text-center text-green-600 bg-green-100 border border-green-600  hover:bg-green-600 hover:text-gray-100  rounded-xl"
+                        >
+                          Agregar a la cesta
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
