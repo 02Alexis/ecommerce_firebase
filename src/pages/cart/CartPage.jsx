@@ -56,84 +56,94 @@ const CartPage = () => {
                 Artículos en su carrito de compras
               </h2>
               <ul role="list" className="divide-y divide-gray-200">
-                {cartItems.map((item, index) => {
-                  const {
-                    id,
-                    title,
-                    price,
-                    productImageUrl,
-                    quantity,
-                    category,
-                  } = item;
-                  return (
-                    <div key={index} className="">
-                      <li className="flex py-6 sm:py-6 ">
-                        <div className="flex-shrink-0">
-                          <img
-                            src={productImageUrl}
-                            alt={"product.name"}
-                            className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center"
-                          />
-                        </div>
+                {cartItems.length > 0 ? (
+                  <>
+                    {cartItems.map((item, index) => {
+                      const {
+                        id,
+                        title,
+                        price,
+                        productImageUrl,
+                        quantity,
+                        category,
+                      } = item;
+                      return (
+                        <div key={index} className="">
+                          <li className="flex py-6 sm:py-6 ">
+                            <div className="flex-shrink-0">
+                              <img
+                                src={productImageUrl}
+                                alt={"product.name"}
+                                className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center"
+                              />
+                            </div>
 
-                        <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                          <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-                            <div>
-                              <div className="flex justify-between">
-                                <h3 className="text-sm">
-                                  <a className="font-semibold text-black">
-                                    {title}
-                                  </a>
-                                </h3>
+                            <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
+                              <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
+                                <div>
+                                  <div className="flex justify-between">
+                                    <h3 className="text-sm">
+                                      <a className="font-semibold text-black">
+                                        {title}
+                                      </a>
+                                    </h3>
+                                  </div>
+                                  <div className="mt-1 flex text-sm">
+                                    <p className="text-sm text-gray-500">
+                                      {category}
+                                    </p>
+                                  </div>
+                                  <div className="mt-1 flex items-end">
+                                    <p className="text-xs font-medium text-gray-500">
+                                      ${price}
+                                    </p>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="mt-1 flex text-sm">
-                                <p className="text-sm text-gray-500">
-                                  {category}
-                                </p>
-                              </div>
-                              <div className="mt-1 flex items-end">
-                                <p className="text-xs font-medium text-gray-500">
-                                  ${price}
-                                </p>
-                              </div>
+                            </div>
+                          </li>
+                          <div className="mb-2 flex">
+                            <div className="min-w-24 flex">
+                              <button
+                                onClick={() => handleDecrement(id)}
+                                type="button"
+                                className="h-7 w-7"
+                              >
+                                -
+                              </button>
+                              <input
+                                type="text"
+                                className="mx-1 h-7 w-9 rounded-md border text-center"
+                                value={quantity}
+                              />
+                              <button
+                                onClick={() => handleIncrement(id)}
+                                type="button"
+                                className="flex h-7 w-7 items-center justify-center"
+                              >
+                                +
+                              </button>
+                            </div>
+                            <div className="ml-6 flex text-sm">
+                              <button
+                                onClick={() => deleteCart(item)}
+                                type="button"
+                                className="flex items-center space-x-1 px-2 py-1 pl-0"
+                              >
+                                <Trash size={12} className="text-red-500" />
+                                <span className="text-xs font-medium text-red-500">
+                                  Remove
+                                </span>
+                              </button>
                             </div>
                           </div>
                         </div>
-                      </li>
-                      <div className="mb-2 flex">
-                        <div className="min-w-24 flex">
-                          <button onClick={() => handleDecrement(id)} type="button" className="h-7 w-7">
-                            -
-                          </button>
-                          <input
-                            type="text"
-                            className="mx-1 h-7 w-9 rounded-md border text-center"
-                            value={quantity}
-                          />
-                          <button
-                            onClick={() => handleIncrement(id)}
-                            type="button"
-                            className="flex h-7 w-7 items-center justify-center"
-                          >
-                            +
-                          </button>
-                        </div>
-                        <div className="ml-6 flex text-sm">
-                          <button
-                            onClick={() => deleteCart(item)}
-                            type="button"
-                            className="flex items-center space-x-1 px-2 py-1 pl-0"
-                          >
-                            <Trash size={12} className="text-red-500" />
-                            <span className="text-xs font-medium text-red-500">
-                              Remove
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </>
+                ) : (
+                  <h1>Sin Productos</h1>
+                )}
               </ul>
             </section>
             {/* Order summary */}
@@ -150,7 +160,9 @@ const CartPage = () => {
               <div>
                 <dl className=" space-y-1 px-2 py-4">
                   <div className="flex items-center justify-between">
-                    <dt className="text-sm text-gray-800">Precio ({cartItemTotal} item)</dt>
+                    <dt className="text-sm text-gray-800">
+                      Precio ({cartItemTotal} item)
+                    </dt>
                     <dd className="text-sm font-medium text-gray-900">
                       $ {cartTotal}
                     </dd>
@@ -167,7 +179,9 @@ const CartPage = () => {
                     <dt className="flex text-sm text-gray-800">
                       <span>Cargos de entrega</span>
                     </dt>
-                    <dd className="text-sm font-medium text-green-700">Gratis</dd>
+                    <dd className="text-sm font-medium text-green-700">
+                      Gratis
+                    </dd>
                   </div>
                   <div className="flex items-center justify-between border-y border-dashed py-4 ">
                     <dt className="text-base font-medium text-gray-900">
