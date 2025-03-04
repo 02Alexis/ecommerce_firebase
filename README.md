@@ -1,8 +1,41 @@
-# React + Vite
+<a name="readme-top"></a>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> [!IMPORTANT]
+>  Para empezar
 
-Currently, two official plugins are available:
+1. Clona el repositorio
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+   ```sh
+   git clone https://github.com/02Alexis/ecommerce_firebase.git
+   ```
+
+2. Navega hasta el directorio
+
+   ```sh
+   cd ecommerce_firebase
+   ```
+3. Instala los paquetes de NPM
+
+   ```sh
+   npm install
+   ```
+
+4. Ejecuta el proyecto
+
+   ```sh
+   npm run dev
+   ```
+
+5. Abre en tu navegador
+   ```
+   http://localhost:5173/
+   ```
+
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+
+   ## 🛠️ Stack
+
+[![My Skills](https://skillicons.dev/icons?i=vite,tailwind,firebase,redux)](https://skillicons.dev)
+
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+
