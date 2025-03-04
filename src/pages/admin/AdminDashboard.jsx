@@ -9,7 +9,7 @@ const AdminDashboard = () => {
   const user = JSON.parse(localStorage.getItem("users"));
 
   const context = useContext(myContext);
-  const {getAllProduct, getAllOrder} = context;
+  const {getAllProduct, getAllOrder, getAllUser} = context;
 
   return (
     <div>
@@ -146,9 +146,9 @@ const AdminDashboard = () => {
                     </svg>
                   </div>
                   <h2 className="title-font font-medium text-3xl text-green-400 fonts1">
-                    10
+                  {getAllUser.length}
                   </h2>
-                  <p className=" text-green-500  font-bold">Total User</p>
+                  <p className=" text-green-500  font-bold">Usuarios</p>
                 </div>
               </Tab>
             </TabList>

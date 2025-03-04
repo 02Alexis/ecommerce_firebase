@@ -66,9 +66,35 @@ function MyState({ children }) {
     }
   };
 
+  // user
+  const [getAllUser, setGetAllUser] = useState([]);
+
+  const getAllUserFunction = async () => {
+    setLoading(true);
+    try {
+        const q = query(
+            collection(fireDB, "user"),
+            orderBy('time')
+        );
+        const data = onSnapshot(q, (QuerySnapshot) => {
+            let userArray = [];
+            QuerySnapshot.forEach((doc) => {
+                userArray.push({ ...doc.data(), id: doc.id });
+            });
+            setGetAllUser(userArray);
+            setLoading(false);
+        });
+        return () => data;
+    } catch (error) {
+        console.log(error);
+        setLoading(false);
+    }
+}
+
   useEffect(() => {
     getAllProductFunction();
     getAllOrderFunction();
+    getAllUserFunction();
   }, []);
 
   return (
@@ -80,6 +106,7 @@ function MyState({ children }) {
         getAllProductFunction,
         getAllOrder,
         deleteProduct,
+        getAllUser,
       }}
     >
       {children}
