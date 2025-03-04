@@ -39,3 +39,8 @@
 
 <p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
+### Capturas de pantalla de Ecommerce-firebase:
+
+![image](https://github.com/user-attachments/assets/2f28d07c-0a9e-4c05-9fc2-855340fb34ce)
+
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
