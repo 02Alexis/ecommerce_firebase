@@ -6,12 +6,11 @@ function Testimonial() {
         <div className="container px-5 py-10 mx-auto">
           {/* Heading  */}
           <h1 className=" text-center text-3xl font-bold text-black">
-            Testimonial
+            Testimonio
           </h1>
           {/* para  */}
           <h2 className=" text-center text-2xl font-semibold mb-10">
-            What our <span className=" text-green-500">customers</span> are
-            saying
+            Lo que nuestro <span className=" text-green-500">clientes</span> han dicho
           </h2>
           <div className="flex flex-wrap -m-4">
             {/* Testimonial 1 */}
@@ -20,7 +19,7 @@ function Testimonial() {
                 <img
                   alt="testimonial"
                   className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="https://ecommerce-sk.vercel.app/img/kamal.png"
+                  src="https://yt3.googleusercontent.com/7yxsIqnHOIXBgNIAhAObnmrZXSqwRDVoilrQzLBjZwUN2BYTtrxN-POOdgOoA1Gvu0p381FHE-g=s900-c-k-c0x00ffffff-no-rj"
                 />
                 <p className="leading-relaxed">
                   Edison bulb retro cloud bread echo park, helvetica stumptown
@@ -62,7 +61,7 @@ function Testimonial() {
                 <img
                   alt="testimonial"
                   className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="https://firebasestorage.googleapis.com/v0/b/devknus-official-database.appspot.com/o/images%2FScreenshot%202023-07-07%20at%202.20.32%20PM-modified.png?alt=media&token=324ddd80-2b40-422c-9f1c-1c1fa34943fa"
+                  src="https://steamuserimages-a.akamaihd.net/ugc/1821152507211645558/42C68CB7D085408AF68ADF69FB79C9816F501722/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
                 />
                 <p className="leading-relaxed">
                   Edison bulb retro cloud bread echo park, helvetica stumptown

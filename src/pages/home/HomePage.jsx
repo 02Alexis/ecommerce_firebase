@@ -14,7 +14,6 @@ function HomePage() {
       <HomePageProductCard />
       <Track />
       <Testimonial />
-      <Loader />
     </Layout>
   )
 }
